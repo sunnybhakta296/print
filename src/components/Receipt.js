@@ -25,13 +25,15 @@ export const Receipt = (props) => {
     );
   }, 0);
 
-  const isJobWork = Object.keys(productNameList).find((key) =>
-    EXCLUDE_GST.includes(key)
-  );
+  const isJobWork = Object.keys(formData).find((key) => {
+       return EXCLUDE_GST.includes(key);
+  });
   const sGst = isJobWork ? 0 : (subTotal * SGSTTAX) / 100;
   const cGst = isJobWork ? 0 : (subTotal * CGSTTAX) / 100;
+  
   const total = isJobWork ? subTotal : Math.ceil(subTotal + sGst + cGst);
 
+  const date = new Date().toJSON().slice(0,10).split('-').reverse().join('-')
   return (
     <>
       <section class="py-3 py-md-5" style={{ display: "none1" }}>
@@ -42,7 +44,8 @@ export const Receipt = (props) => {
                 {/* <div class="col-6">
                   <h2 class="text-uppercase text-endx m-0">Invoice</h2>
                 </div> */}
-                <div class="col-12">
+                <div className="col-6"><h6>{date}</h6></div>
+                <div className="col-6">
                   <a
                     style={{
                       backgroundColor: "golden",
